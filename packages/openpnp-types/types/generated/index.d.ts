@@ -7,3 +7,4 @@
 /// <reference path="./java_net_URL.d.ts" />
 /// <reference path="./com_sun_net_httpserver_HttpServer.d.ts" />
 /// <reference path="./com_sun_net_httpserver_HttpExchange.d.ts" />
+/// <reference path="./javax_swing_JOptionPane.d.ts" />
