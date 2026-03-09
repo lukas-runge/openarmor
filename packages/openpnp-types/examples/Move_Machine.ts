@@ -10,29 +10,29 @@
 load(scripting.getScriptsDirectory().toString() + "/Examples/JavaScript/Utility.js");
 
 // Import some OpenPnP classes we'll use
-var imports = new JavaImporter(org.openpnp.model, org.openpnp.util);
+const moveImports = new JavaImporter(org.openpnp.model, org.openpnp.util);
 
 // Using the imports from above, do some work.
-var Location = imports.Location;
-var LengthUnit = imports.LengthUnit;
+const MoveLocation = moveImports.Location;
+const MoveLengthUnit = moveImports.LengthUnit;
 
 task(function () {
-    var nozzle = machine.defaultHead.defaultNozzle;
-    var location = nozzle.location;
+    const nozzle = machine.defaultHead.defaultNozzle;
+    let location = nozzle.location;
 
     // Move 10mm right
-    location = location.add(new Location(LengthUnit.Millimeters, 10, 0, 0, 0));
+    location = location.add(new MoveLocation(MoveLengthUnit.Millimeters, 10, 0, 0, 0));
     nozzle.moveTo(location);
 
     // Move 10mm up
-    location = location.add(new Location(LengthUnit.Millimeters, 0, 10, 0, 0));
+    location = location.add(new MoveLocation(MoveLengthUnit.Millimeters, 0, 10, 0, 0));
     nozzle.moveTo(location);
 
     // Move 10mm left
-    location = location.add(new Location(LengthUnit.Millimeters, -10, 0, 0, 0));
+    location = location.add(new MoveLocation(MoveLengthUnit.Millimeters, -10, 0, 0, 0));
     nozzle.moveTo(location);
 
     // Move 10mm down
-    location = location.add(new Location(LengthUnit.Millimeters, 0, -10, 0, 0));
+    location = location.add(new MoveLocation(MoveLengthUnit.Millimeters, 0, -10, 0, 0));
     nozzle.moveTo(location);
 });

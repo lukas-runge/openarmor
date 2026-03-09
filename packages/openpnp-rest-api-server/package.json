@@ -1,0 +1,36 @@
+{
+    "name": "openpnp-rest-api-server",
+    "version": "0.1.0",
+    "private": true,
+    "description": "OpenPnP Nashorn REST API server bundle",
+    "main": "dist/server.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./server": "./dist/server.js"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "clean:generated": "rm -rf generated .cache-tsc",
+        "generate:openapi": "tsoa spec",
+        "generate:routes": "tsoa routes",
+        "typecheck": "tsc -p tsconfig.json --noEmit",
+        "compile": "tsc -p tsconfig.json",
+        "bundle": "esbuild .cache-tsc/src/server.js --target=es5 --bundle --platform=neutral --main-fields=module,main --format=iife --outfile=dist/server.js",
+        "build": "pnpm run clean:generated && pnpm run generate:openapi && pnpm run generate:routes && pnpm run typecheck && pnpm run compile && pnpm run bundle && mv generated/openapi.json dist/openapi.json",
+        "watch": "tsc -p tsconfig.json --watch",
+        "clean": "rm -rf dist generated .cache-tsc"
+    },
+    "dependencies": {
+        "openpnp-types": "workspace:*",
+        "openpnp-utils": "workspace:*",
+        "js-yaml": "^4.1.0",
+        "tsoa": "^6.6.0"
+    },
+    "license": "MIT"
+}

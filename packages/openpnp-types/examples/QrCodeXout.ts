@@ -10,22 +10,22 @@
 load(scripting.getScriptsDirectory().toString() + "/Examples/JavaScript/Utility.js");
 
 // Import some OpenPnP classes we'll use
-var imports = new JavaImporter(org.openpnp.model, org.openpnp.util);
+const qrImports = new JavaImporter(org.openpnp.model, org.openpnp.util);
 
 // Using the imports from above, do some work.
-var Location = imports.Location;
-var LengthUnit = imports.LengthUnit;
-var Utils2D = imports.Utils2D;
-var VisionUtils = imports.VisionUtils;
+const QrLocation = qrImports.Location;
+const QrLengthUnit = qrImports.LengthUnit;
+const Utils2D = qrImports.Utils2D;
+const VisionUtils = qrImports.VisionUtils;
 
 task(function () {
-    var camera = machine.getDefaultHead().getDefaultCamera();
-    var boards = gui.jobTab.job.boardLocations;
-    for (var i = 0; i < boards.size(); i++) {
-        var board = boards.get(i);
-        var location = Utils2D.calculateBoardPlacementLocation(board, new Location(LengthUnit.Millimeters, 3, 3, 0, 0));
+    const camera = machine.getDefaultHead().getDefaultCamera();
+    const boards = gui.jobTab.job.boardLocations;
+    for (let i = 0; i < boards.size(); i++) {
+        const board = boards.get(i);
+        const location = Utils2D.calculateBoardPlacementLocation(board, new QrLocation(QrLengthUnit.Millimeters, 3, 3, 0, 0));
         camera.moveTo(location);
-        var code = VisionUtils.readQrCode(camera);
+        const code = VisionUtils.readQrCode(camera);
         if (code != null) {
             board.setEnabled(false);
             gui.jobTab.refresh();

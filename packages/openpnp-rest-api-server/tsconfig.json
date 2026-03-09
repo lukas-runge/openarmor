@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": ".cache-tsc",
+        "rootDir": ".",
+        "types": [
+            "openpnp-types"
+        ],
+        "lib": [
+            "es5"
+        ],
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": false,
+        "resolveJsonModule": true,
+        "baseUrl": "."
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
+}

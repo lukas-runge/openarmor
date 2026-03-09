@@ -1,0 +1,31 @@
+{
+    "name": "openpnp-rest-api-client",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "description": "Typed OpenPnP REST API client library",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "generate": "pnpm --filter openpnp-rest-api-server build && openapi-ts -i ../openpnp-rest-api-server/dist/openapi.json -o src/generated",
+        "typecheck": "tsc -p tsconfig.json --noEmit",
+        "build": "pnpm run generate && pnpm run typecheck && tsc -p tsconfig.json",
+        "watch": "tsc -p tsconfig.json --watch",
+        "clean": "rm -rf dist src/generated"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@hey-api/openapi-ts": "^0.80.2"
+    },
+    "license": "MIT"
+}

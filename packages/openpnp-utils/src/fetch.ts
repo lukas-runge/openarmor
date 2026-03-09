@@ -4,13 +4,12 @@
 export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | "HEAD", body?: string, contentType?: string, exHeaders?: { [key: string]: string }): string | number | void {
     method = method || "GET";
     contentType = contentType || "application/json; utf-8";
-    var HttpURLConnectionftch = Java.type("java.net.HttpURLConnection");
-    var URLftch = Java.type("java.net.URL");
-    var BufferedReaderftch = Java.type("java.io.BufferedReader");
-    var InputStreamReaderftch = Java.type("java.io.InputStreamReader");
-    var StringBufferftch = Java.type("java.lang.StringBuffer");
-    var StringBuilderftch = Java.type("java.lang.StringBuilder");
-    var UserAgentftch = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
+    const URLftch = Java.type("java.net.URL");
+    const BufferedReaderftch = Java.type("java.io.BufferedReader");
+    const InputStreamReaderftch = Java.type("java.io.InputStreamReader");
+    const StringBufferftch = Java.type("java.lang.StringBuffer");
+    const StringBuilderftch = Java.type("java.lang.StringBuilder");
+    const UserAgentftch = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
     if (!url) {
         console.error("it cant be empty!");
         return;
@@ -19,18 +18,18 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
         console.error("The web page cannot contain spaces!");
         return;
     }
-    var urlftch;
-    var conftch;
-    var responsecodeftch;
-    var responseLineftch;
-    var inftch;
-    var inputlineftch;
-    var responseftch;
-    var jsonContentftch;
-    var osftch;
-    var inputftch;
-    var brftch;
-    var exHeadersJ;
+    let urlftch;
+    let conftch;
+    let responsecodeftch;
+    let responseLineftch;
+    let inftch;
+    let inputlineftch;
+    let responseftch;
+    let jsonContentftch;
+    let osftch;
+    let inputftch;
+    let brftch;
+    let exHeadersJ;
     switch (method) {
         case "GET":
             try {
@@ -40,7 +39,7 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
                 conftch.setRequestProperty("User-Agent", UserAgentftch);
                 if (exHeaders != null) {
                     exHeadersJ = Object.keys(exHeaders);
-                    for (var k in exHeadersJ) {
+                    for (const k in exHeadersJ) {
                         conftch.setRequestProperty(exHeadersJ[k], exHeaders[exHeadersJ[k]]);
                     }
                 }
@@ -56,7 +55,6 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
                 console.error(error);
             }
             return;
-            break;
         case "HEAD":
             try {
                 urlftch = new URLftch(url);
@@ -65,7 +63,7 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
                 conftch.setRequestProperty("User-Agent", UserAgentftch);
                 if (exHeaders != null) {
                     exHeadersJ = Object.keys(exHeaders);
-                    for (var k in exHeadersJ) {
+                    for (const k in exHeadersJ) {
                         conftch.setRequestProperty(exHeadersJ[k], exHeaders[exHeadersJ[k]]);
                     }
                 }
@@ -81,7 +79,6 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
                 console.error(error);
             }
             return;
-            break;
         case "POST":
             if (!body) {
                 console.error("You need content to use POST!");
@@ -94,7 +91,7 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
             conftch.setRequestProperty("Content-Type", contentType);
             if (exHeaders != null) {
                 exHeadersJ = Object.keys(exHeaders);
-                for (var k in exHeadersJ) {
+                for (const k in exHeadersJ) {
                     conftch.setRequestProperty(exHeadersJ[k], exHeaders[exHeadersJ[k]]);
                 }
             }
@@ -130,7 +127,7 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
             conftch.setRequestProperty("Content-Type", contentType);
             if (exHeaders != null) {
                 exHeadersJ = Object.keys(exHeaders);
-                for (var k in exHeadersJ) {
+                for (const k in exHeadersJ) {
                     conftch.setRequestProperty(exHeadersJ[k], exHeaders[exHeadersJ[k]]);
                 }
             }
@@ -162,7 +159,7 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
             conftch.setRequestProperty("Content-Type", contentType);
             if (exHeaders != null) {
                 exHeadersJ = Object.keys(exHeaders);
-                for (var k in exHeadersJ) {
+                for (const k in exHeadersJ) {
                     conftch.setRequestProperty(exHeadersJ[k], exHeaders[exHeadersJ[k]]);
                 }
             }

@@ -1,0 +1,17 @@
+{
+    "entryFile": "src/spec-entry.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": [
+        "src/controllers/*Controller.ts"
+    ],
+    "spec": {
+        "outputDirectory": "generated",
+        "specVersion": 3,
+        "specFileBaseName": "openapi"
+    },
+    "routes": {
+        "routesDir": "generated",
+        "middleware": "express",
+        "middlewareTemplate": "tsoa/openpnp-utils.hbs"
+    }
+}

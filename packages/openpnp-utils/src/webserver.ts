@@ -1,7 +1,7 @@
-var InetSocketAddressSrv = Java.type("java.net.InetSocketAddress");
-var HttpServerSrv = Java.type("com.sun.net.httpserver.HttpServer");
-var URLSrv = Java.type("java.net.URL");
-var ThreadSrv = Java.type("java.lang.Thread");
+const InetSocketAddressSrv = Java.type("java.net.InetSocketAddress");
+const HttpServerSrv = Java.type("com.sun.net.httpserver.HttpServer");
+const URLSrv = Java.type("java.net.URL");
+const ThreadSrv = Java.type("java.lang.Thread");
 
 type RouteMethod = "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "ALL";
 
@@ -66,7 +66,7 @@ function normalizePath(path: string): string {
 }
 
 function resolveKillPath(killKey?: string): string {
-    var key = killKey || "__kill__";
+    let key = killKey || "__kill__";
     if (key.charAt(0) === "/") {
         key = key.substring(1);
     }
@@ -80,12 +80,12 @@ function createResponse(exchange: com.sun.net.httpserver.HttpExchange): OpenPnpR
             exchange.getResponseHeaders().set(name, value);
         },
         send: function (status: number, body: string, contentType?: string): void {
-            var response = body || "";
-            var type = contentType || "text/plain; charset=utf-8";
+            const response = body || "";
+            const type = contentType || "text/plain; charset=utf-8";
             exchange.getResponseHeaders().set("Content-Type", type);
-            var bytes = response.getBytes("UTF-8");
+            const bytes = response.getBytes("UTF-8");
             exchange.sendResponseHeaders(status, bytes.length);
-            var os = exchange.getResponseBody();
+            const os = exchange.getResponseBody();
             os.write(bytes);
             os.close();
         },
@@ -93,7 +93,7 @@ function createResponse(exchange: com.sun.net.httpserver.HttpExchange): OpenPnpR
             this.send(status, body, "text/plain; charset=utf-8");
         },
         json: function (status: number, body: string | { [key: string]: any }): void {
-            var payload = typeof body === "string" ? body : JSON.stringify(body);
+            const payload = typeof body === "string" ? body : JSON.stringify(body);
             this.send(status, payload, "application/json; charset=utf-8");
         },
     };
@@ -108,20 +108,20 @@ export function sendNotFound(res: OpenPnpResponse, body?: string): void {
 }
 
 export function killOldServer(options?: KillServerOptions): void {
-    var host = (options && options.host) || "127.0.0.1";
-    var port = (options && options.port) || 8080;
-    var connectTimeoutMs = (options && options.connectTimeoutMs) || 300;
-    var readTimeoutMs = (options && options.readTimeoutMs) || 1000;
-    var settleMs = (options && options.settleMs) || 300;
-    var killPath = resolveKillPath(options && options.killKey);
+    const host = (options && options.host) || "127.0.0.1";
+    const port = (options && options.port) || 8080;
+    const connectTimeoutMs = (options && options.connectTimeoutMs) || 300;
+    const readTimeoutMs = (options && options.readTimeoutMs) || 1000;
+    const settleMs = (options && options.settleMs) || 300;
+    const killPath = resolveKillPath(options && options.killKey);
 
     try {
-        var conn = new URLSrv("http://" + host + ":" + port + killPath).openConnection();
+        const conn = new URLSrv("http://" + host + ":" + port + killPath).openConnection();
         conn.setRequestMethod("GET");
         conn.setConnectTimeout(connectTimeoutMs);
         conn.setReadTimeout(readTimeoutMs);
 
-        var code = conn.getResponseCode();
+        const code = conn.getResponseCode();
         print("Kill returned " + code);
     } catch (e) {
         print("No old server running.");
@@ -133,11 +133,11 @@ export function killOldServer(options?: KillServerOptions): void {
 }
 
 export function createWebServer(options?: WebServerOptions): OpenPnpWebServer {
-    var host = (options && options.host) || "127.0.0.1";
-    var port = (options && options.port) || 8080;
-    var backlog = (options && options.backlog) || 0;
-    var killPath = resolveKillPath(options && options.killKey);
-    var routesByPath: { [path: string]: RouteDefinition[] } = {};
+    const host = (options && options.host) || "127.0.0.1";
+    const port = (options && options.port) || 8080;
+    const backlog = (options && options.backlog) || 0;
+    const killPath = resolveKillPath(options && options.killKey);
+    const routesByPath: { [path: string]: RouteDefinition[] } = {};
 
     if (options && options.autoKillOld) {
         killOldServer({
@@ -147,25 +147,24 @@ export function createWebServer(options?: WebServerOptions): OpenPnpWebServer {
         });
     }
 
-    var server = HttpServerSrv.create(new InetSocketAddressSrv(port), backlog);
+    const server = HttpServerSrv.create(new InetSocketAddressSrv(port), backlog);
 
     function register(method: RouteMethod, path: string, handler: RouteHandler): void {
-        var normalizedPath = normalizePath(path);
+        const normalizedPath = normalizePath(path);
         if (!routesByPath[normalizedPath]) {
             routesByPath[normalizedPath] = [];
             server.createContext(normalizedPath, function (exchange: com.sun.net.httpserver.HttpExchange) {
-                var requestMethod = String(exchange.getRequestMethod()).toUpperCase();
-                var routeList = routesByPath[normalizedPath];
-                var req: OpenPnpRequest = {
+                const requestMethod = String(exchange.getRequestMethod()).toUpperCase();
+                const routeList = routesByPath[normalizedPath];
+                const req: OpenPnpRequest = {
                     exchange: exchange,
                     method: requestMethod,
                     path: String(exchange.getRequestURI().getPath()),
                     query: exchange.getRequestURI().getQuery(),
                 };
-                var res = createResponse(exchange);
-                var i;
-                for (i = 0; i < routeList.length; i++) {
-                    var route = routeList[i];
+                const res = createResponse(exchange);
+                for (let i = 0; i < routeList.length; i++) {
+                    const route = routeList[i];
                     if (route.method === "ALL" || route.method === requestMethod) {
                         route.handler(req, res);
                         return;
@@ -184,13 +183,13 @@ export function createWebServer(options?: WebServerOptions): OpenPnpWebServer {
     }
 
     server.createContext(killPath, function (exchange: com.sun.net.httpserver.HttpExchange) {
-        var res = createResponse(exchange);
+        const res = createResponse(exchange);
         res.text(200, "Bye!");
         print("Server is terminating - bye!");
         server.stop(0);
     });
 
-    var app: OpenPnpWebServer = {
+    const app: OpenPnpWebServer = {
         port: port,
         killPath: killPath,
         get: function (path: string, handler: RouteHandler): OpenPnpWebServer {

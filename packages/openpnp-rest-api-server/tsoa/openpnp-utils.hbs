@@ -1,0 +1,267 @@
+/* tslint:disable */
+/* eslint-disable */
+// WARNING: This file was auto-generated with tsoa. Please do not modify it.
+{{#each controllers}}
+import { {{name}} } from '{{modulePath}}';
+{{/each}}
+import type { OpenPnpRequest, OpenPnpResponse, OpenPnpWebServer } from 'openpnp-utils';
+
+var ScannerClass = Java.type('java.util.Scanner');
+
+function readRequestBody(req: OpenPnpRequest): string {
+  var scanner = new ScannerClass(req.exchange.getRequestBody(), 'UTF-8');
+  scanner.useDelimiter('\\A');
+  var payload = scanner.hasNext() ? String(scanner.next()) : '';
+  scanner.close();
+  return payload;
+}
+
+function parseJsonBody(req: OpenPnpRequest): any {
+  var raw = readRequestBody(req);
+  if (!raw) {
+    return {};
+  }
+  return JSON.parse(raw);
+}
+
+function parseQueryString(rawQuery: string | null): Record<string, string> {
+  var query: Record<string, string> = {};
+  if (!rawQuery) {
+    return query;
+  }
+
+  var pairs = String(rawQuery).split('&');
+  var i: number;
+  for (i = 0; i < pairs.length; i++) {
+    var pair = pairs[i];
+    if (!pair) {
+      continue;
+    }
+    var eq = pair.indexOf('=');
+    var key = eq >= 0 ? pair.substring(0, eq) : pair;
+    var value = eq >= 0 ? pair.substring(eq + 1) : '';
+    query[decodeURIComponent(key)] = decodeURIComponent(value);
+  }
+
+  return query;
+}
+
+function readHeader(req: OpenPnpRequest, name: string): string | undefined {
+  var headers = req.exchange.getRequestHeaders();
+  var values = headers.get(name);
+  if (values && values.size && values.size() > 0) {
+    return String(values.get(0));
+  }
+  values = headers.get(String(name).toLowerCase());
+  if (values && values.size && values.size() > 0) {
+    return String(values.get(0));
+  }
+  return undefined;
+}
+
+function extractPathParams(actualPath: string, routePath: string): Record<string, string> | null {
+  var params: Record<string, string> = {};
+  var routeSegments = routePath.split('/');
+  var pathSegments = actualPath.split('/');
+
+  if (routeSegments.length !== pathSegments.length) {
+    return null;
+  }
+
+  var i: number;
+  for (i = 0; i < routeSegments.length; i++) {
+    var routeSegment = routeSegments[i];
+    var pathSegment = pathSegments[i];
+
+    if (routeSegment.charAt(0) === '{' && routeSegment.charAt(routeSegment.length - 1) === '}') {
+      var key = routeSegment.substring(1, routeSegment.length - 1);
+      params[key] = decodeURIComponent(pathSegment);
+      continue;
+    }
+
+    if (routeSegment.charAt(0) === ':') {
+      var key = routeSegment.substring(1);
+      params[key] = decodeURIComponent(pathSegment);
+      continue;
+    }
+
+    if (routeSegment !== pathSegment) {
+      return null;
+    }
+  }
+
+  return params;
+}
+
+function createResponseAdapter(response: OpenPnpResponse): any {
+  var statusCode = 200;
+  var sent = false;
+
+  return {
+    headersSent: false,
+    set: function (name: string, value: string): any {
+      if (!sent) {
+        response.setHeader(name, value);
+      }
+      return this;
+    },
+    status: function (code: number): any {
+      statusCode = code;
+      return this;
+    },
+    json: function (data: any): any {
+      sent = true;
+      this.headersSent = true;
+      response.json(statusCode, data);
+      return this;
+    },
+    end: function (body?: any): any {
+      sent = true;
+      this.headersSent = true;
+      if (body === undefined || body === null) {
+        response.send(statusCode, '', 'application/json; charset=utf-8');
+      } else {
+        response.send(statusCode, String(body), 'text/plain; charset=utf-8');
+      }
+      return this;
+    },
+  };
+}
+
+function getArgValue(param: any, pathParams: Record<string, string>, queryParams: Record<string, string>, body: any, request: OpenPnpRequest): any {
+  if (param.in === 'path') {
+    return pathParams[param.name];
+  }
+  if (param.in === 'query') {
+    return queryParams[param.name];
+  }
+  if (param.in === 'queries') {
+    return queryParams;
+  }
+  if (param.in === 'body') {
+    return body;
+  }
+  if (param.in === 'body-prop') {
+    return body ? body[param.name] : undefined;
+  }
+  if (param.in === 'request') {
+    return request;
+  }
+  if (param.in === 'header') {
+    return readHeader(request, param.name);
+  }
+
+  return undefined;
+}
+
+function buildValidatedArgs(
+  args: Record<string, any>,
+  pathParams: Record<string, string>,
+  queryParams: Record<string, string>,
+  body: any,
+  request: OpenPnpRequest
+): any[] {
+  var values: any[] = [];
+  var key: string;
+  for (key in args) {
+    if (Object.prototype.hasOwnProperty.call(args, key)) {
+      values.push(getArgValue(args[key], pathParams, queryParams, body, request));
+    }
+  }
+  return values;
+}
+
+function applyControllerHeaders(controller: any, responseAdapter: any): void {
+  if (typeof controller.getHeaders !== 'function') {
+    return;
+  }
+  var headers = controller.getHeaders() || {};
+  var name: string;
+  for (name in headers) {
+    if (Object.prototype.hasOwnProperty.call(headers, name)) {
+      responseAdapter.set(name, headers[name]);
+    }
+  }
+}
+
+function resolveStatusCode(controller: any, successStatus?: number): number {
+  if (typeof controller.getStatus === 'function') {
+    var controllerStatus = controller.getStatus();
+    if (controllerStatus) {
+      return controllerStatus;
+    }
+  }
+  return successStatus || 200;
+}
+
+export function RegisterRoutes(app: OpenPnpWebServer) {
+  {{#each controllers}}
+  {{#each actions}}
+  const args{{../name}}_{{name}}: Record<string, any> = {
+    {{#each parameters}}
+    {{@key}}: {{{json this}}},
+    {{/each}}
+  };
+  {{/each}}
+  {{/each}}
+
+  app.all('/api', function dispatchApiRoutes(request: OpenPnpRequest, response: OpenPnpResponse) {
+    var body = parseJsonBody(request);
+    var queryParams = parseQueryString(request.query);
+    var method = String(request.method || '').toLowerCase();
+    var matchedPath = false;
+
+    {{#each controllers}}
+    {{#each actions}}
+    {
+      var pathParams{{../name}}_{{name}} = extractPathParams(request.path, '{{fullPath}}');
+      if (pathParams{{../name}}_{{name}}) {
+        matchedPath = true;
+        if (method === '{{method}}') {
+          try {
+            var responseAdapter{{../name}}_{{name}} = createResponseAdapter(response);
+            var validatedArgs{{../name}}_{{name}} = buildValidatedArgs(args{{../name}}_{{name}}, pathParams{{../name}}_{{name}}, queryParams, body, request);
+            var controller{{../name}}_{{name}} = new {{../name}}();
+            var result{{../name}}_{{name}} = (controller{{../name}}_{{name}} as any)['{{name}}'].apply(controller{{../name}}_{{name}}, validatedArgs{{../name}}_{{name}});
+
+            var handleSuccess = function (data: any): void {
+              var statusCode = resolveStatusCode(controller{{../name}}_{{name}}, {{successStatus}});
+              applyControllerHeaders(controller{{../name}}_{{name}}, responseAdapter{{../name}}_{{name}});
+              if (data === undefined || data === null) {
+                responseAdapter{{../name}}_{{name}}.status(statusCode || 204).end();
+              } else {
+                responseAdapter{{../name}}_{{name}}.status(statusCode || 200).json(data);
+              }
+            };
+
+            var handleError = function (err: any): void {
+              var status = err && err.status ? err.status : 400;
+              response.text(status, String(err));
+            };
+
+            if (result{{../name}}_{{name}} && typeof (result{{../name}}_{{name}} as any).then === 'function') {
+              (result{{../name}}_{{name}} as any).then(handleSuccess, handleError);
+              return;
+            }
+
+            handleSuccess(result{{../name}}_{{name}});
+            return;
+          } catch (err) {
+            var status = (err as any) && (err as any).status ? (err as any).status : 400;
+            response.text(status, String(err));
+            return;
+          }
+        }
+      }
+    }
+    {{/each}}
+    {{/each}}
+
+    if (matchedPath) {
+      response.text(405, 'Method not allowed: ' + request.method);
+      return;
+    }
+
+    response.text(404, 'Not found');
+  });
+}
