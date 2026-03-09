@@ -36,7 +36,7 @@ java -cp "${GEN_CLASSES_DIR}:${OPENPNP_CP}" org.openpnp.tools.ScriptingTypeScrip
   --packages org.openpnp.model,org.openpnp.spi,org.openpnp.scripting,org.openpnp.gui,org.openpnp.util
 
 if [[ -f "${CLASS_LIST_FILE}" ]]; then
-  while IFS= read -r class_name; do
+  while IFS= read -r class_name || [[ -n "${class_name}" ]]; do
     class_name="${class_name%%#*}"
     class_name="$(echo "${class_name}" | xargs)"
     if [[ -z "${class_name}" ]]; then
@@ -57,7 +57,7 @@ fi
   echo "// AUTO-GENERATED FILE. DO NOT EDIT MANUALLY."
   echo "/// <reference path=\"./openpnp-java.d.ts\" />"
   if [[ -f "${CLASS_LIST_FILE}" ]]; then
-    while IFS= read -r class_name; do
+    while IFS= read -r class_name || [[ -n "${class_name}" ]]; do
       class_name="${class_name%%#*}"
       class_name="$(echo "${class_name}" | xargs)"
       if [[ -z "${class_name}" ]]; then
