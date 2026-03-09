@@ -1,0 +1,24 @@
+{
+    "name": "openpnp-rest-api",
+    "version": "0.1.0",
+    "private": true,
+    "description": "OpenPnP REST API client helpers",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "typecheck": "tsc -p tsconfig.json --noEmit",
+        "typecheck:watch": "tsc -p tsconfig.json --noEmit --watch",
+        "bundle": "esbuild src/index.ts --bundle --platform=neutral --main-fields=module,main --format=iife --outfile=dist/index.js",
+        "watch": "esbuild src/index.ts --bundle --platform=neutral --main-fields=module,main --format=iife --outfile=dist/index.js --watch",
+        "build": "pnpm run typecheck && pnpm run bundle",
+        "clean": "rm -rf dist"
+    },
+    "dependencies": {
+        "openpnp-utils": "workspace:*",
+        "openpnp-types": "workspace:*"
+    },
+    "license": "MIT"
+}

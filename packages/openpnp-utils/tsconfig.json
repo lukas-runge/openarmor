@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es2020",
+        "module": "commonjs",
+        "declaration": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "outDir": "dist",
+        "rootDir": "src",
+        "lib": [
+            "es5"
+        ],
+        "types": [
+            "openpnp-types"
+        ],
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
+}

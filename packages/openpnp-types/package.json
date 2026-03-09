@@ -1,0 +1,23 @@
+{
+    "name": "openpnp-types",
+    "private": true,
+    "version": "0.1.0",
+    "description": "TypeScript types for OpenPnP Nashorn scripts",
+    "types": "types/index.d.ts",
+    "files": [
+        "types"
+    ],
+    "scripts": {
+        "generate-types": "./generate-openpnp-dts.sh",
+        "typecheck:examples": "tsc -p tsconfig.json --noEmit",
+        "typecheck:examples:watch": "tsc -p tsconfig.json --noEmit --watch",
+        "bundle:examples": "esbuild examples/*.ts --bundle --platform=neutral --format=iife --outdir=build",
+        "watch:examples": "esbuild examples/*.ts --bundle --platform=neutral --format=iife --outdir=build --watch",
+        "build": "pnpm run typecheck:examples && pnpm run bundle:examples",
+        "clean": "rm -rf build"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.2"
+    },
+    "license": "MIT"
+}

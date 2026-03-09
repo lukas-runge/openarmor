@@ -1,0 +1,17 @@
+{
+  "name": "openpnp-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "description": "pnpm workspace for OpenPnP tooling packages",
+  "scripts": {
+    "build": "pnpm -r build",
+    "watch": "pnpm -r --parallel watch",
+    "clean": "pnpm -r clean"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.9",
+    "typescript": "^5.9.2"
+  },
+  "packageManager": "pnpm@10.29.3",
+  "license": "MIT"
+}

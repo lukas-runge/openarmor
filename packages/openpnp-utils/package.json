@@ -1,0 +1,23 @@
+{
+    "name": "openpnp-utils",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Shared utilities for OpenPnP TypeScript tooling",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "typecheck": "tsc -p tsconfig.json --noEmit",
+        "typecheck:watch": "tsc -p tsconfig.json --noEmit --watch",
+        "bundle": "esbuild src/index.ts --bundle --platform=neutral --format=esm --outfile=dist/index.js",
+        "watch": "esbuild src/index.ts --bundle --platform=neutral --format=esm --outfile=dist/index.js --watch",
+        "build": "pnpm run typecheck && pnpm run bundle",
+        "clean": "rm -rf dist"
+    },
+    "devDependencies": {
+        "openpnp-types": "workspace:*"
+    },
+    "license": "MIT"
+}

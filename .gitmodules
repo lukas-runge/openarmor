@@ -1,0 +1,3 @@
+[submodule "openpnp"]
+	path = packages/openpnp
+	url = https://github.com/openpnp/openpnp

@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": [
+            "es5"
+        ],
+        "module": "none",
+        "strict": false,
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "skipLibCheck": true,
+        "removeComments": false,
+        "outDir": "./build"
+    },
+    "include": [
+        "examples/**/*.ts",
+        "types/**/*.d.ts"
+    ]
+}
