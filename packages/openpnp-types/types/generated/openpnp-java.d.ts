@@ -24288,8 +24288,8 @@ declare namespace org.openpnp.gui.support {
   }
 
   interface LengthCellValueClass {
-    new(p0: string): LengthCellValue;
     new(p0: org.openpnp.model.Length): LengthCellValue;
+    new(p0: string): LengthCellValue;
     new(p0: org.openpnp.model.Length, p1: boolean): LengthCellValue;
     new(p0: org.openpnp.model.Length, p1: boolean, p2: boolean): LengthCellValue;
     setConfiguration(p0: org.openpnp.model.Configuration): void;
@@ -27913,8 +27913,8 @@ declare namespace org.openpnp.gui.support {
   }
 
   interface RotationCellValueClass {
-    new(p0: string): RotationCellValue;
     new(p0: number): RotationCellValue;
+    new(p0: string): RotationCellValue;
     new(p0: number, p1: boolean): RotationCellValue;
     new(p0: number, p1: boolean, p2: boolean): RotationCellValue;
     setConfiguration(p0: org.openpnp.model.Configuration): void;
@@ -33655,8 +33655,8 @@ declare namespace org.openpnp.model {
 
   interface BottomVisionSettingsClass {
     new(): BottomVisionSettings;
-    new(p0: org.openpnp.machine.reference.vision.ReferenceBottomVision_PartSettings): BottomVisionSettings;
     new(p0: string): BottomVisionSettings;
+    new(p0: org.openpnp.machine.reference.vision.ReferenceBottomVision_PartSettings): BottomVisionSettings;
     readonly DEFAULT_BOTTOM_ID: string;
     readonly DEFAULT_FIDUCIAL_ID: string;
     readonly STOCK_BOTTOM_BODY_ID: string;
@@ -34604,8 +34604,8 @@ declare namespace org.openpnp.model {
 
   interface MotionClass {
     new(p0: org.openpnp.model.Motion): Motion;
-    new(p0: org.openpnp.spi.HeadMountable, p1: org.openpnp.model.AxesLocation, p2: org.openpnp.model.AxesLocation, p3: number, p4: number): Motion;
     new(p0: org.openpnp.spi.HeadMountable, p1: org.openpnp.model.AxesLocation, p2: org.openpnp.model.AxesLocation, p3: number, p4?: org.openpnp.model.Motion_MotionOption[]): Motion;
+    new(p0: org.openpnp.spi.HeadMountable, p1: org.openpnp.model.AxesLocation, p2: org.openpnp.model.AxesLocation, p3: number, p4: number): Motion;
     new(p0: org.openpnp.spi.HeadMountable, p1: org.openpnp.model.AxesLocation, p2: org.openpnp.model.AxesLocation, p3: number, p4: number, p5: number, p6: number, p7: number): Motion;
     optionFlags(p0?: org.openpnp.model.Motion_MotionOption[]): number;
   }
@@ -35184,8 +35184,8 @@ declare namespace org.openpnp.model {
 
   interface PanelClass {
     new(): Panel;
-    new(p0: any): Panel;
     new(p0: org.openpnp.model.Panel): Panel;
+    new(p0: any): Panel;
     readonly LATEST_VERSION: number;
   }
 
@@ -35651,8 +35651,8 @@ declare namespace org.openpnp.model {
 
   interface PlacementsHolderLocationClass {
     new(): PlacementsHolderLocation;
-    new(p0: any): PlacementsHolderLocation;
     new(p0: org.openpnp.model.PlacementsHolder): PlacementsHolderLocation;
+    new(p0: any): PlacementsHolderLocation;
     readonly ID_DELIMITTER: string;
   }
 

@@ -102,7 +102,7 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
             conftch.setDoOutput(true);
             osftch = conftch.getOutputStream();
             try {
-                inputftch = (jsonContentftch as any).getBytes("utf-8");
+                inputftch = jsonContentftch.getBytes("utf-8");
                 osftch.write(inputftch, 0, inputftch.length);
             } finally {
                 osftch.close();
@@ -138,7 +138,7 @@ export function fetch(url: string, method?: "GET" | "POST" | "PUT" | "DELETE" | 
             conftch.setDoOutput(true);
             osftch = conftch.getOutputStream();
             try {
-                inputftch = (jsonContentftch as any).getBytes("utf-8");
+                inputftch = jsonContentftch.getBytes("utf-8");
                 osftch.write(inputftch, 0, inputftch.length);
             } finally {
                 osftch.close();

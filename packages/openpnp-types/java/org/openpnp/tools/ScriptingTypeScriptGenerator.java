@@ -27,9 +27,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class ScriptingTypeScriptGenerator {
+    private static final Set<String> generatedClassNames = new HashSet<>();
+
     private static final class Config {
         private String outputPath;
         private List<String> packagePrefixes = new ArrayList<>();
+        private List<String> explicitClassNames = new ArrayList<>();
     }
 
     private static final class ClassModel {
@@ -66,8 +69,16 @@ public class ScriptingTypeScriptGenerator {
         Config config = parseArgs(args);
         validateConfig(config);
 
-        List<String> classNames = discoverClassNames(config.packagePrefixes);
+        List<String> classNames = new ArrayList<>();
+        if (!config.packagePrefixes.isEmpty()) {
+            classNames.addAll(discoverClassNames(config.packagePrefixes));
+        }
+        classNames.addAll(config.explicitClassNames);
+        classNames = dedupeAndSort(classNames);
+
         LinkedHashMap<String, ClassModel> models = buildModels(classNames);
+        generatedClassNames.clear();
+        generatedClassNames.addAll(models.keySet());
         String output = renderTypeDefinitions(models);
 
         writeOutput(config.outputPath, output);
@@ -89,6 +100,14 @@ public class ScriptingTypeScriptGenerator {
                         config.packagePrefixes.add(trimmed);
                     }
                 }
+            } else if ("--classes".equals(arg) && i + 1 < args.length) {
+                String[] classNames = args[++i].split(",");
+                for (String className : classNames) {
+                    String trimmed = className.trim();
+                    if (!trimmed.isEmpty()) {
+                        config.explicitClassNames.add(trimmed);
+                    }
+                }
             }
         }
         return config;
@@ -98,12 +117,24 @@ public class ScriptingTypeScriptGenerator {
         if (config.outputPath == null || config.outputPath.isEmpty()) {
             throw new IllegalArgumentException("Missing required argument --output <file>");
         }
-        if (config.packagePrefixes.isEmpty()) {
-            throw new IllegalArgumentException("Missing required argument --packages <pkg1,pkg2,...>");
+        if (config.packagePrefixes.isEmpty() && config.explicitClassNames.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Missing required argument --packages <pkg1,pkg2,...> or --classes <cls1,cls2,...>");
         }
     }
 
+    private static List<String> dedupeAndSort(List<String> values) {
+        Set<String> unique = new HashSet<>(values);
+        List<String> deduped = new ArrayList<>(unique);
+        Collections.sort(deduped);
+        return deduped;
+    }
+
     private static List<String> discoverClassNames(List<String> packagePrefixes) {
+        if (packagePrefixes.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         List<String> classNames = new ArrayList<>();
 
         ClassGraph classGraph = new ClassGraph().enableClassInfo();
@@ -438,7 +469,7 @@ public class ScriptingTypeScriptGenerator {
                 return "string";
             }
 
-            if (clazz.getName().startsWith("org.openpnp.")) {
+            if (clazz.getName().startsWith("org.openpnp.") || generatedClassNames.contains(clazz.getName())) {
                 return formatJavaName(clazz.getName());
             }
             return "any";

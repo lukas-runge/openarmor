@@ -11,9 +11,9 @@
         "generate-types": "./generate-openpnp-dts.sh",
         "typecheck:examples": "tsc -p tsconfig.json --noEmit",
         "typecheck:examples:watch": "tsc -p tsconfig.json --noEmit --watch",
-        "bundle:examples": "esbuild examples/*.ts --bundle --platform=neutral --format=iife --outdir=build",
-        "watch:examples": "esbuild examples/*.ts --bundle --platform=neutral --format=iife --outdir=build --watch",
-        "build": "pnpm run typecheck:examples && pnpm run bundle:examples",
+        "build:examples": "tsc -p tsconfig.json",
+        "watch:examples": "tsc -p tsconfig.json --watch",
+        "build": "pnpm run build:examples",
         "clean": "rm -rf build"
     },
     "devDependencies": {

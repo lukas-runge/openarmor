@@ -1,8 +1,12 @@
-/// <reference path="./generated/openpnp-java.d.ts" />
-
 declare function print(...args: any[]): void;
 declare function load(path: string): void;
 declare const Packages: any;
+
+// string has a getBytes("UTF-8")
+declare interface String {
+    getBytes(charset: string): Uint8Array;
+    length(): number;
+}
 
 interface JavaImporterConstructor {
     <P1 extends object>(p1: P1): P1;
@@ -27,30 +31,4 @@ declare const machine: org.openpnp.spi.Machine;
 declare const gui: org.openpnp.gui.MainFrame;
 declare const scripting: org.openpnp.scripting.Scripting;
 
-declare const javax: {
-    swing: {
-        JOptionPane: {
-            showMessageDialog(parentComponent: any | null, message: string): void;
-        };
-    };
-    script: {
-        ScriptEngineManager: {
-            new (): {
-                getEngineFactories(): java.util.List<{
-                    getEngineName(): string;
-                    getEngineVersion(): string;
-                    getLanguageName(): string;
-                    getLanguageVersion(): string;
-                    getExtensions(): java.util.List<string>;
-                }>;
-            };
-        };
-    };
-};
-
-declare namespace java.util {
-    interface List<T> {
-        size(): number;
-        get(index: number): T;
-    }
-}
+declare const javax: any;

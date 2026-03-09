@@ -11,9 +11,8 @@
     "scripts": {
         "typecheck": "tsc -p tsconfig.json --noEmit",
         "typecheck:watch": "tsc -p tsconfig.json --noEmit --watch",
-        "bundle": "esbuild src/index.ts --bundle --platform=neutral --format=esm --outfile=dist/index.js",
-        "watch": "esbuild src/index.ts --bundle --platform=neutral --format=esm --outfile=dist/index.js --watch",
-        "build": "pnpm run typecheck && pnpm run bundle",
+        "watch": "tsc -p tsconfig.json --watch",
+        "build": "tsc -p tsconfig.json",
         "clean": "rm -rf dist"
     },
     "devDependencies": {

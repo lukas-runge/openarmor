@@ -11,10 +11,11 @@
     "scripts": {
         "typecheck": "tsc -p tsconfig.json --noEmit",
         "typecheck:watch": "tsc -p tsconfig.json --noEmit --watch",
-        "bundle": "esbuild src/index.ts --bundle --platform=neutral --main-fields=module,main --format=iife --outfile=dist/index.js",
-        "watch": "esbuild src/index.ts --bundle --platform=neutral --main-fields=module,main --format=iife --outfile=dist/index.js --watch",
-        "build": "pnpm run typecheck && pnpm run bundle",
-        "clean": "rm -rf dist"
+        "compile": "tsc -p tsconfig.json --outDir .cache/tsc",
+        "bundle": "esbuild .cache/tsc/index.js --target=es5 --bundle --platform=neutral --main-fields=module,main --format=iife --outfile=dist/index.js",
+        "watch": "tsc -p tsconfig.json --watch",
+        "build": "pnpm run typecheck && pnpm run compile && pnpm run bundle",
+        "clean": "rm -rf dist .cache"
     },
     "dependencies": {
         "openpnp-utils": "workspace:*",
