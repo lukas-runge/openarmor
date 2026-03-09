@@ -86,10 +86,10 @@ declare namespace java.lang {
 
   interface StringClass {
     new(): String;
-    new(p0: any): String;
     new(p0: number[]): String;
-    new(p0: any): String;
     new(p0: string[]): String;
+    new(p0: any): String;
+    new(p0: any): String;
     new(p0: string): String;
     new(p0: number[], p1: string): String;
     new(p0: number[], p1: any): String;
@@ -97,8 +97,8 @@ declare namespace java.lang {
     new(p0: number[], p1: number, p2: number): String;
     new(p0: string[], p1: number, p2: number): String;
     new(p0: number[], p1: number, p2: number): String;
-    new(p0: number[], p1: number, p2: number, p3: any): String;
     new(p0: number[], p1: number, p2: number, p3: string): String;
+    new(p0: number[], p1: number, p2: number, p3: any): String;
     new(p0: number[], p1: number, p2: number, p3: number): String;
     readonly CASE_INSENSITIVE_ORDER: any;
     copyValueOf(p0: string[]): string;

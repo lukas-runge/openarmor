@@ -10080,10 +10080,10 @@ declare namespace org.openpnp.gui.components {
   interface AutoSelectTextTableClass {
     new(): AutoSelectTextTable;
     new(p0: any): AutoSelectTextTable;
+    new(p0: any[][], p1: any[]): AutoSelectTextTable;
     new(p0: any, p1: any): AutoSelectTextTable;
     new(p0: number, p1: number): AutoSelectTextTable;
     new(p0: any, p1: any): AutoSelectTextTable;
-    new(p0: any[][], p1: any[]): AutoSelectTextTable;
     new(p0: any, p1: any, p2: any): AutoSelectTextTable;
     readonly ABORT: number;
     readonly ALLBITS: number;
@@ -15954,9 +15954,9 @@ declare namespace org.openpnp.gui.components {
 
   interface SeparatorComboBoxClass {
     new(): SeparatorComboBox;
-    new(p0: any): SeparatorComboBox;
-    new(p0: any): SeparatorComboBox;
     new(p0: any[]): SeparatorComboBox;
+    new(p0: any): SeparatorComboBox;
+    new(p0: any): SeparatorComboBox;
     readonly ABORT: number;
     readonly ALLBITS: number;
     readonly BOTTOM_ALIGNMENT: number;
@@ -17912,10 +17912,10 @@ declare namespace org.openpnp.gui.components {
 
   interface VerticalLabelClass {
     new(): VerticalLabel;
-    new(p0: any): VerticalLabel;
     new(p0: string): VerticalLabel;
-    new(p0: any, p1: number): VerticalLabel;
+    new(p0: any): VerticalLabel;
     new(p0: string, p1: number): VerticalLabel;
+    new(p0: any, p1: number): VerticalLabel;
     new(p0: string, p1: any, p2: number): VerticalLabel;
     readonly ABORT: number;
     readonly ALLBITS: number;
@@ -20502,9 +20502,9 @@ declare namespace org.openpnp.gui.support {
   }
 
   interface ActuatorsComboBoxModelClass {
-    new(p0: org.openpnp.spi.Machine): ActuatorsComboBoxModel;
-    new(p0: org.openpnp.spi.Head): ActuatorsComboBoxModel;
     new(p0: any): ActuatorsComboBoxModel;
+    new(p0: org.openpnp.spi.Head): ActuatorsComboBoxModel;
+    new(p0: org.openpnp.spi.Machine): ActuatorsComboBoxModel;
     new(p0: org.openpnp.spi.Machine, p1: org.openpnp.spi.Head): ActuatorsComboBoxModel;
   }
 
@@ -20552,8 +20552,8 @@ declare namespace org.openpnp.gui.support {
   }
 
   interface AreaCellValueClass {
-    new(p0: org.openpnp.model.Area): AreaCellValue;
     new(p0: string): AreaCellValue;
+    new(p0: org.openpnp.model.Area): AreaCellValue;
     new(p0: org.openpnp.model.Area, p1: boolean): AreaCellValue;
     setConfiguration(p0: org.openpnp.model.Configuration): void;
   }
@@ -22906,8 +22906,8 @@ declare namespace org.openpnp.gui.support {
   interface FlexibleColorClass {
     new(p0: number): FlexibleColor;
     new(p0: number, p1: boolean): FlexibleColor;
-    new(p0: number, p1: number, p2: number): FlexibleColor;
     new(p0: any, p1: number[], p2: number): FlexibleColor;
+    new(p0: number, p1: number, p2: number): FlexibleColor;
     new(p0: number, p1: number, p2: number): FlexibleColor;
     new(p0: number, p1: number, p2: number, p3: number): FlexibleColor;
     new(p0: number, p1: number, p2: number, p3: number): FlexibleColor;
@@ -24288,8 +24288,8 @@ declare namespace org.openpnp.gui.support {
   }
 
   interface LengthCellValueClass {
-    new(p0: org.openpnp.model.Length): LengthCellValue;
     new(p0: string): LengthCellValue;
+    new(p0: org.openpnp.model.Length): LengthCellValue;
     new(p0: org.openpnp.model.Length, p1: boolean): LengthCellValue;
     new(p0: org.openpnp.model.Length, p1: boolean, p2: boolean): LengthCellValue;
     setConfiguration(p0: org.openpnp.model.Configuration): void;
@@ -27913,8 +27913,8 @@ declare namespace org.openpnp.gui.support {
   }
 
   interface RotationCellValueClass {
-    new(p0: number): RotationCellValue;
     new(p0: string): RotationCellValue;
+    new(p0: number): RotationCellValue;
     new(p0: number, p1: boolean): RotationCellValue;
     new(p0: number, p1: boolean, p2: boolean): RotationCellValue;
     setConfiguration(p0: org.openpnp.model.Configuration): void;
@@ -28053,8 +28053,8 @@ declare namespace org.openpnp.gui.support {
   }
 
   interface VolumeCellValueClass {
-    new(p0: org.openpnp.model.Volume): VolumeCellValue;
     new(p0: string): VolumeCellValue;
+    new(p0: org.openpnp.model.Volume): VolumeCellValue;
     new(p0: org.openpnp.model.Volume, p1: boolean): VolumeCellValue;
     setConfiguration(p0: org.openpnp.model.Configuration): void;
   }
@@ -33355,15 +33355,15 @@ declare namespace org.openpnp.model {
 
   interface AxesLocationClass {
     new(): AxesLocation;
-    new(p0: any): AxesLocation;
-    new(p0: org.openpnp.spi.Machine): AxesLocation;
     new(p0?: org.openpnp.spi.CoordinateAxis[]): AxesLocation;
-    new(p0: any, p1: any): AxesLocation;
-    new(p0: org.openpnp.spi.Machine, p1: any): AxesLocation;
-    new(p0: org.openpnp.spi.Axis, p1: number): AxesLocation;
+    new(p0: org.openpnp.spi.Machine): AxesLocation;
+    new(p0: any): AxesLocation;
     new(p0: org.openpnp.spi.Axis, p1: org.openpnp.model.Length): AxesLocation;
-    new(p0: any, p1: org.openpnp.model.AxesLocation): AxesLocation;
+    new(p0: org.openpnp.spi.Axis, p1: number): AxesLocation;
+    new(p0: org.openpnp.spi.Machine, p1: any): AxesLocation;
+    new(p0: any, p1: any): AxesLocation;
     new(p0: any, p1?: org.openpnp.model.AxesLocation[]): AxesLocation;
+    new(p0: any, p1: org.openpnp.model.AxesLocation): AxesLocation;
     new(p0: org.openpnp.spi.Machine, p1: org.openpnp.spi.Driver, p2: any): AxesLocation;
     readonly zero: org.openpnp.model.AxesLocation;
     getUnits(): org.openpnp.model.LengthUnit;
@@ -33424,8 +33424,8 @@ declare namespace org.openpnp.model {
 
   interface BoardClass {
     new(): Board;
-    new(p0: org.openpnp.model.Board): Board;
     new(p0: any): Board;
+    new(p0: org.openpnp.model.Board): Board;
   }
 
   interface BoardLocation {
@@ -33993,8 +33993,8 @@ declare namespace org.openpnp.model {
 
   interface FiducialVisionSettingsClass {
     new(): FiducialVisionSettings;
-    new(p0: org.openpnp.machine.reference.vision.ReferenceFiducialLocator_PartSettings): FiducialVisionSettings;
     new(p0: string): FiducialVisionSettings;
+    new(p0: org.openpnp.machine.reference.vision.ReferenceFiducialLocator_PartSettings): FiducialVisionSettings;
     readonly DEFAULT_BOTTOM_ID: string;
     readonly DEFAULT_FIDUCIAL_ID: string;
     readonly STOCK_BOTTOM_BODY_ID: string;
@@ -34511,8 +34511,8 @@ declare namespace org.openpnp.model {
 
   interface LocationClass {
     new(): Location;
-    new(p0: org.openpnp.model.Location): Location;
     new(p0: org.openpnp.model.LengthUnit): Location;
+    new(p0: org.openpnp.model.Location): Location;
     new(p0: org.openpnp.model.LengthUnit, p1: number, p2: number, p3: number, p4: number): Location;
     readonly origin: org.openpnp.model.Location;
   }
@@ -35184,8 +35184,8 @@ declare namespace org.openpnp.model {
 
   interface PanelClass {
     new(): Panel;
-    new(p0: org.openpnp.model.Panel): Panel;
     new(p0: any): Panel;
+    new(p0: org.openpnp.model.Panel): Panel;
     readonly LATEST_VERSION: number;
   }
 
@@ -35280,8 +35280,8 @@ declare namespace org.openpnp.model {
 
   interface PanelLocationClass {
     new(): PanelLocation;
-    new(p0: org.openpnp.model.Panel): PanelLocation;
     new(p0: org.openpnp.model.PanelLocation): PanelLocation;
+    new(p0: org.openpnp.model.Panel): PanelLocation;
     readonly ID_DELIMITTER: string;
     readonly ID_PREFIX: string;
     setParentsOfAllDescendants(p0: org.openpnp.model.PanelLocation): void;
@@ -35651,8 +35651,8 @@ declare namespace org.openpnp.model {
 
   interface PlacementsHolderLocationClass {
     new(): PlacementsHolderLocation;
-    new(p0: org.openpnp.model.PlacementsHolder): PlacementsHolderLocation;
     new(p0: any): PlacementsHolderLocation;
+    new(p0: org.openpnp.model.PlacementsHolder): PlacementsHolderLocation;
     readonly ID_DELIMITTER: string;
   }
 
@@ -40130,10 +40130,10 @@ declare namespace org.openpnp.spi {
   interface JobProcessor_JobProcessorExceptionClass {
     new(p0: any, p1: string): JobProcessor_JobProcessorException;
     new(p0: any, p1: any): JobProcessor_JobProcessorException;
-    new(p0: any, p1: any, p2: boolean): JobProcessor_JobProcessorException;
     new(p0: any, p1: any, p2: string): JobProcessor_JobProcessorException;
     new(p0: any, p1: any, p2: any): JobProcessor_JobProcessorException;
     new(p0: any, p1: string, p2: boolean): JobProcessor_JobProcessorException;
+    new(p0: any, p1: any, p2: boolean): JobProcessor_JobProcessorException;
   }
 
   interface JobProcessor_TextStatusListener {
@@ -44163,8 +44163,8 @@ declare namespace org.openpnp.util {
   }
 
   interface HslColorClass {
-    new(p0: any): HslColor;
     new(p0: number[]): HslColor;
+    new(p0: any): HslColor;
     new(p0: number[], p1: number): HslColor;
     new(p0: number, p1: number, p2: number): HslColor;
     new(p0: number, p1: number, p2: number, p3: number): HslColor;
@@ -45276,8 +45276,8 @@ declare namespace org.openpnp.util {
   }
 
   interface UiUtils_ExceptionWithContinuationClass {
-    new(p0: any, p1: org.openpnp.util.UiUtils_Thrunnable): UiUtils_ExceptionWithContinuation;
     new(p0: string, p1: org.openpnp.util.UiUtils_Thrunnable): UiUtils_ExceptionWithContinuation;
+    new(p0: any, p1: org.openpnp.util.UiUtils_Thrunnable): UiUtils_ExceptionWithContinuation;
   }
 
   interface UiUtils_Thrunnable {

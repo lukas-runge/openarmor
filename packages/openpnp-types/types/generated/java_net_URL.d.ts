@@ -46,8 +46,8 @@ declare namespace java.net {
   interface URLClass {
     new(p0: string): URL;
     new(p0: java.net.URL, p1: string): URL;
-    new(p0: java.net.URL, p1: string, p2: any): URL;
     new(p0: string, p1: string, p2: string): URL;
+    new(p0: java.net.URL, p1: string, p2: any): URL;
     new(p0: string, p1: string, p2: number, p3: string): URL;
     new(p0: string, p1: string, p2: number, p3: string, p4: any): URL;
     of(p0: any, p1: any): java.net.URL;

@@ -58,8 +58,8 @@ declare namespace java.lang {
     new(p0: string): Thread;
     new(p0: any): Thread;
     new(p0: any, p1: string): Thread;
-    new(p0: any, p1: string): Thread;
     new(p0: any, p1: any): Thread;
+    new(p0: any, p1: string): Thread;
     new(p0: any, p1: any, p2: string): Thread;
     new(p0: any, p1: any, p2: string, p3: number): Thread;
     new(p0: any, p1: any, p2: string, p3: number, p4: boolean): Thread;

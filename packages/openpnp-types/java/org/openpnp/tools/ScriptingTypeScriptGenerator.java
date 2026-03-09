@@ -215,7 +215,19 @@ public class ScriptingTypeScriptGenerator {
                 sortMethods(instanceMethods);
                 sortMethods(staticMethods);
                 staticFields.sort(Comparator.comparing(Field::getName));
-                constructors.sort(Comparator.comparingInt(Constructor::getParameterCount));
+                constructors.sort((a, b) -> {
+                    int arityCompare = Integer.compare(a.getParameterCount(), b.getParameterCount());
+                    if (arityCompare != 0) {
+                        return arityCompare;
+                    }
+                    String aSig = Arrays.toString(a.getGenericParameterTypes());
+                    String bSig = Arrays.toString(b.getGenericParameterTypes());
+                    int sigCompare = aSig.compareTo(bSig);
+                    if (sigCompare != 0) {
+                        return sigCompare;
+                    }
+                    return Boolean.compare(a.isVarArgs(), b.isVarArgs());
+                });
 
                 models.put(className,
                         new ClassModel(className, dedupeMethods(instanceMethods), dedupeMethods(staticMethods),

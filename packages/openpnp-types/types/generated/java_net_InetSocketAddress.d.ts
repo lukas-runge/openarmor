@@ -26,8 +26,8 @@ declare namespace java.net {
 
   interface InetSocketAddressClass {
     new(p0: number): InetSocketAddress;
-    new(p0: any, p1: number): InetSocketAddress;
     new(p0: string, p1: number): InetSocketAddress;
+    new(p0: any, p1: number): InetSocketAddress;
     createUnresolved(p0: string, p1: number): java.net.InetSocketAddress;
   }
 
