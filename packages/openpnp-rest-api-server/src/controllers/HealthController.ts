@@ -1,5 +1,9 @@
 import { Controller, Get, Route } from "../tsoa-runtime";
-import type { HealthResponse } from "./contracts";
+
+interface HealthResponse {
+    status: "OK";
+    message: string;
+}
 
 @Route("api/health")
 export class HealthController extends Controller {

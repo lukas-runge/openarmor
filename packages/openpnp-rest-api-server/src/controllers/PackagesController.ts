@@ -1,8 +1,17 @@
 import { Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse } from "../tsoa-runtime";
-import type { CreatePackageRequest, DeletePackageResponse, PackageDto, SetPackageByIdRequest } from "./contracts";
 import { createHttpError, listFromCollection, validateNumberField, validateStringField } from "./common";
 
 const PackageClass = Java.type("org.openpnp.model.Package");
+
+export interface PackageDto {
+    id: string;
+    description: string | null;
+    tapeSpecification: string | null;
+    pickVacuumLevel: number | null;
+    placeBlowOffLevel: number | null;
+    bottomVision: string | null;
+    fiducialVision: string | null;
+}
 
 function toPackageDto(pkg: org.openpnp.model.Package): PackageDto {
     const bottomVisionRef = pkg.getBottomVisionSettings();
@@ -94,8 +103,8 @@ export class PackagesController extends Controller {
 
     @SuccessResponse("201", "Created")
     @Post()
-    public createPackage(@Body() body: CreatePackageRequest): PackageDto {
-        const payload = validatePackagePayload(body.pkg);
+    public createPackage(@Body() body: { package: PackageDto }): PackageDto {
+        const payload = validatePackagePayload(body.package);
         if (config.getPackage(payload.id)) {
             throw createHttpError(409, "Package already exists: " + payload.id);
         }
@@ -109,10 +118,10 @@ export class PackagesController extends Controller {
     }
 
     @Put("{id}")
-    public setPackageById(@Path() id: string, @Body() body: SetPackageByIdRequest): PackageDto {
-        const payload = validatePackagePayload(body.pkg);
+    public setPackageById(@Path() id: string, @Body() body: { package: PackageDto }): PackageDto {
+        const payload = validatePackagePayload(body.package);
         if (payload.id !== id) {
-            throw createHttpError(400, "Path id does not match body.pkg.id.");
+            throw createHttpError(400, "Path id does not match body.package.id.");
         }
 
         const existing = config.getPackage(id);
@@ -126,7 +135,7 @@ export class PackagesController extends Controller {
     }
 
     @Delete("{id}")
-    public deletePackageById(@Path() id: string): DeletePackageResponse {
+    public deletePackageById(@Path() id: string): { deleted: true } {
         const pkg = config.getPackage(id);
         if (!pkg) {
             throw createHttpError(404, "Package not found: " + id);

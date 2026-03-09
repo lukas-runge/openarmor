@@ -201,11 +201,11 @@ export function RegisterRoutes(app: OpenPnpWebServer) {
     id: {"in":"path","name":"id","required":true,"dataType":"string"},
   };
   const argsPartsController_createPart: Record<string, any> = {
-    body: {"in":"body","name":"body","required":true,"ref":"CreatePartRequest"},
+    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"part":{"ref":"PartDto","required":true}}},
   };
   const argsPartsController_setPartById: Record<string, any> = {
     id: {"in":"path","name":"id","required":true,"dataType":"string"},
-    body: {"in":"body","name":"body","required":true,"ref":"SetPartByIdRequest"},
+    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"part":{"ref":"PartDto","required":true}}},
   };
   const argsPartsController_deletePartById: Record<string, any> = {
     id: {"in":"path","name":"id","required":true,"dataType":"string"},
@@ -216,11 +216,11 @@ export function RegisterRoutes(app: OpenPnpWebServer) {
     id: {"in":"path","name":"id","required":true,"dataType":"string"},
   };
   const argsPackagesController_createPackage: Record<string, any> = {
-    body: {"in":"body","name":"body","required":true,"ref":"CreatePackageRequest"},
+    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"package":{"ref":"PackageDto","required":true}}},
   };
   const argsPackagesController_setPackageById: Record<string, any> = {
     id: {"in":"path","name":"id","required":true,"dataType":"string"},
-    body: {"in":"body","name":"body","required":true,"ref":"SetPackageByIdRequest"},
+    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"package":{"ref":"PackageDto","required":true}}},
   };
   const argsPackagesController_deletePackageById: Record<string, any> = {
     id: {"in":"path","name":"id","required":true,"dataType":"string"},

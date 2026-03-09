@@ -1,15 +1,18 @@
 import { Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse } from "../tsoa-runtime";
-import type { CreatePartRequest, DeletePartResponse, PartDto, SetPartByIdRequest } from "./contracts";
-import { createHttpError, listFromCollection, validateNumberField, validateStringField } from "./common";
+import { createHttpError, listFromCollection, toLengthValue, validateNumberField, validateStringField } from "./common";
 
 const LengthClass = Java.type("org.openpnp.model.Length");
 const PartClass = Java.type("org.openpnp.model.Part");
 
-function toLengthValue(length: org.openpnp.model.Length | null): number | null {
-    if (!length) {
-        return null;
-    }
-    return Number(length.getValue());
+export interface PartDto {
+    id: string;
+    name: string | null;
+    height: number | null;
+    throughBoardDepth: number | null;
+    package: string | null;
+    speed: number | null;
+    bottomVision: string | null;
+    fiducialVision: string | null;
 }
 
 function toPartDto(part: org.openpnp.model.Part): PartDto {
@@ -122,7 +125,7 @@ export class PartsController extends Controller {
 
     @SuccessResponse("201", "Created")
     @Post()
-    public createPart(@Body() body: CreatePartRequest): PartDto {
+    public createPart(@Body() body: { part: PartDto }): PartDto {
         const payload = validatePartPayload(body.part);
         if (config.getPart(payload.id)) {
             throw createHttpError(409, "Part already exists: " + payload.id);
@@ -137,7 +140,7 @@ export class PartsController extends Controller {
     }
 
     @Put("{id}")
-    public setPartById(@Path() id: string, @Body() body: SetPartByIdRequest): PartDto {
+    public setPartById(@Path() id: string, @Body() body: { part: PartDto }): PartDto {
         const payload = validatePartPayload(body.part);
         if (payload.id !== id) {
             throw createHttpError(400, "Path id does not match body.part.id.");
@@ -154,7 +157,7 @@ export class PartsController extends Controller {
     }
 
     @Delete("{id}")
-    public deletePartById(@Path() id: string): DeletePartResponse {
+    public deletePartById(@Path() id: string): { deleted: true } {
         const part = config.getPart(id);
         if (!part) {
             throw createHttpError(404, "Part not found: " + id);

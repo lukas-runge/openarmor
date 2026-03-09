@@ -36,3 +36,10 @@ export function validateStringField(value: unknown, fieldName: string): string |
     }
     return value;
 }
+
+export function toLengthValue(length: org.openpnp.model.Length | null): number | null {
+    if (!length) {
+        return null;
+    }
+    return Number(length.getValue());
+}

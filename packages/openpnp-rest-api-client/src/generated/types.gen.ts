@@ -11,18 +11,6 @@ export type PartDto = {
     fiducialVision: string | null;
 };
 
-export type CreatePartRequest = {
-    part: PartDto;
-};
-
-export type SetPartByIdRequest = {
-    part: PartDto;
-};
-
-export type DeletePartResponse = {
-    deleted: true;
-};
-
 export type PackageDto = {
     id: string;
     description: string | null;
@@ -31,18 +19,6 @@ export type PackageDto = {
     placeBlowOffLevel: number | null;
     bottomVision: string | null;
     fiducialVision: string | null;
-};
-
-export type CreatePackageRequest = {
-    pkg: PackageDto;
-};
-
-export type SetPackageByIdRequest = {
-    pkg: PackageDto;
-};
-
-export type DeletePackageResponse = {
-    deleted: true;
 };
 
 export type HealthResponse = {
@@ -67,7 +43,9 @@ export type ListPartsResponses = {
 export type ListPartsResponse = ListPartsResponses[keyof ListPartsResponses];
 
 export type CreatePartData = {
-    body: CreatePartRequest;
+    body: {
+        part: PartDto;
+    };
     path?: never;
     query?: never;
     url: '/api/parts';
@@ -95,7 +73,9 @@ export type DeletePartByIdResponses = {
     /**
      * Ok
      */
-    200: DeletePartResponse;
+    200: {
+        deleted: true;
+    };
 };
 
 export type DeletePartByIdResponse = DeletePartByIdResponses[keyof DeletePartByIdResponses];
@@ -119,7 +99,9 @@ export type GetPartByIdResponses = {
 export type GetPartByIdResponse = GetPartByIdResponses[keyof GetPartByIdResponses];
 
 export type SetPartByIdData = {
-    body: SetPartByIdRequest;
+    body: {
+        part: PartDto;
+    };
     path: {
         id: string;
     };
@@ -153,7 +135,9 @@ export type ListPackagesResponses = {
 export type ListPackagesResponse = ListPackagesResponses[keyof ListPackagesResponses];
 
 export type CreatePackageData = {
-    body: CreatePackageRequest;
+    body: {
+        package: PackageDto;
+    };
     path?: never;
     query?: never;
     url: '/api/packages';
@@ -181,7 +165,9 @@ export type DeletePackageByIdResponses = {
     /**
      * Ok
      */
-    200: DeletePackageResponse;
+    200: {
+        deleted: true;
+    };
 };
 
 export type DeletePackageByIdResponse = DeletePackageByIdResponses[keyof DeletePackageByIdResponses];
@@ -205,7 +191,9 @@ export type GetPackageByIdResponses = {
 export type GetPackageByIdResponse = GetPackageByIdResponses[keyof GetPackageByIdResponses];
 
 export type SetPackageByIdData = {
-    body: SetPackageByIdRequest;
+    body: {
+        package: PackageDto;
+    };
     path: {
         id: string;
     };
